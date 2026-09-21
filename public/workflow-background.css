@@ -1,0 +1,56 @@
+/* Brand controls. RGB channels also feed the canvas renderer. */
+:root {
+  --network-rgb: 105, 231, 223;
+  --network-success-rgb: 198, 233, 146;
+  --network-opacity: .72;
+  --tools-duration: 96s;
+}
+/* A separate stacking context keeps decoration below all page content. */
+body { isolation: isolate; }
+.automation-background {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  overflow: hidden; opacity: var(--network-opacity);
+  background: radial-gradient(ellipse at 85% 20%, #10313770, transparent 65%);
+}
+.automation-background canvas { display: block; width: 100%; height: 100%; }
+.background-control { min-height: 44px; font-size: .75rem; color: var(--muted); }
+.demo { position: relative; }
+.demo::after {
+  content: ''; position: absolute; inset: -1px; pointer-events: none;
+  border: 1px solid var(--accent); border-radius: inherit;
+  box-shadow: 0 0 42px #69e7df18; opacity: 0;
+  transition: opacity .5s;
+}
+.demo.workflow-running::after { opacity: .7; }
+.workflow .node-icon { position: relative; }
+.workflow .node:disabled { opacity: 1; cursor: default; }
+.workflow .node-icon img { width: 26px; height: 26px; object-fit: contain; background: #f6f9fa; padding: 3px; border-radius: 5px; }
+.workflow .node.active .node-icon { animation: workflow-lift 1.05s ease-in-out both; }
+.workflow .node.active .node-icon::after {
+  content: ''; position: absolute; inset: -5px; border: 1px solid var(--accent);
+  border-radius: inherit; animation: workflow-ring 1.05s ease-out both;
+}
+.workflow .connector { position: relative; overflow: visible; }
+.workflow .connector::before {
+  content: ''; position: absolute; left: 0; top: -5px; width: 100%; height: 10px;
+  background: radial-gradient(circle at calc(100% - 3px) 50%, var(--accent) 2px, #69e7df40 3px, transparent 6px);
+  opacity: 0;
+}
+.workflow .node.active + .connector::before { animation: workflow-packet 1.05s ease-in-out both; }
+.workflow .node.done + .connector { background: #69e7df70; }
+.tools-track { animation-duration: var(--tools-duration); }
+.tools-rail:nth-of-type(2) .tools-track { animation-duration: 76s; }
+.tool-chip { position: relative; }
+.tool-chip::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--accent); border-radius: inherit; opacity: 0; transition: opacity .25s; pointer-events: none; }
+.tool-chip.is-activated::after { opacity: 1; }
+.tool-chip.is-activated img { animation: workflow-lift 1.05s ease-in-out; }
+@keyframes workflow-lift { 0%,100% { transform: translateY(0); } 45% { transform: translateY(-7px) scale(1.08); } }
+@keyframes workflow-ring { from { transform: scale(.85); opacity: .9; } to { transform: scale(1.6); opacity: 0; } }
+@keyframes workflow-packet { 0% { transform: translateX(-100%); opacity: 0; } 20% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(0); opacity: 0; } }
+/* Pause includes foreground payoff effects; the demo still completes. */
+.background-paused .workflow *, .background-paused .workflow *::after,
+.background-paused .workflow *::before, .background-paused .tool-chip img { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .demo::after, .tool-chip::after { transition: none; }
+  .workflow *, .workflow *::after, .workflow *::before { animation: none !important; }
+}
