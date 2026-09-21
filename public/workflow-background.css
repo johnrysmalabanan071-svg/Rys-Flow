@@ -22,9 +22,13 @@ body { isolation: isolate; }
   transition: opacity .5s;
 }
 .demo.workflow-running::after { opacity: .7; }
-.workflow .node-icon { position: relative; }
+.workflow .node-icon { position: relative; color: var(--muted); }
 .workflow .node:disabled { opacity: 1; cursor: default; }
-.workflow .node-icon img { width: 26px; height: 26px; object-fit: contain; background: #f6f9fa; padding: 3px; border-radius: 5px; }
+.workflow .node-icon svg { display: block; }
+.workflow .node:is(:hover, :focus-visible, .active, .done) .node-icon {
+  color: rgb(var(--route-rgb, var(--network-rgb, 105, 231, 223)));
+}
+.workflow .node.done .node-icon { background: #14262e; border-color: currentColor; }
 .workflow .node.active .node-icon { animation: workflow-lift 1.05s ease-in-out both; }
 .workflow .node.active .node-icon::after {
   content: ''; position: absolute; inset: -5px; border: 1px solid var(--accent);
