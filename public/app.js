@@ -10,7 +10,7 @@ document.addEventListener('keydown', e => { if(e.key === 'Escape' && menu.getAtt
 // Header presentation: scroll tint and one active section in the reading band.
 const header = $('.header');
 const sectionLinks = $$('#nav-links a[href^="#"]');
-const navSections = ['work', 'services', 'process', 'about', 'contact']
+const navSections = ['about', 'experience', 'work', 'services', 'tools', 'contact']
   .map(id => document.getElementById(id)).filter(Boolean);
 function markNavSection(id) {
   sectionLinks.forEach(link => {
@@ -100,48 +100,11 @@ const serviceVisuals = [
   ]
 ];
 
-$('#services-list').innerHTML = services.map(
-  ([name, description, type], i) => {
-    const [subtitle, paths] = serviceVisuals[i];
-
-    return `
-      <details ${i === 0 ? 'open' : ''}>
-        <summary>
-          <span class="service-number">0${i + 1}</span>
-
-          <span class="service-icon" aria-hidden="true">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              focusable="false"
-            >${paths}</svg>
-          </span>
-
-          <span class="service-heading">
-            <span class="service-title">${name}</span>
-            <small class="service-subtitle">${subtitle}</small>
-          </span>
-
-          <span class="service-toggle" aria-hidden="true">+</span>
-        </summary>
-
-        <div class="service-body">
-          <p>${description}</p>
-          <button class="text-link" data-service="${type}">
-            Talk through this workflow ↗
-          </button>
-        </div>
-      </details>
-    `;
-  }
-).join('');
+// Service cards retain the existing guided-intake prefill behavior.
+$('#services-list').innerHTML = services.map(([name, description, type], i) => {
+  const [subtitle, paths] = serviceVisuals[i];
+  return `<article class="service-card"><div class="service-card-top"><span class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths}</svg></span><span class="service-card-number">0${i+1}</span></div><h3>${name}</h3><p>${description}</p><div class="service-card-bottom"><small>${subtitle}</small><button class="service-card-cta" data-service="${type}" aria-label="Discuss ${escape(name)}"><span aria-hidden="true">↗</span></button></div></article>`;
+}).join('');
 $$('[data-service]').forEach(b => b.addEventListener('click', () => prefill(b.dataset.service)));
 renderProjects();
 
