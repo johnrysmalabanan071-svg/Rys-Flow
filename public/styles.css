@@ -710,3 +710,26 @@ body.background-paused :is(.header .button, .hero .actions > .button,
     transition: none;
   }
 }
+
+/* Violet borders on the three primary buttons only. */
+:is(.header .button, .hero .actions > .button, #run-demo) {
+  box-shadow: 0 0 14px rgba(139, 92, 246, .22);
+}
+
+@supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
+  :is(.header .button, .hero .actions > .button, #run-demo)::before {
+    inset: -3px;
+    padding: 2.5px;
+    border-radius: 9px;
+    background: conic-gradient(
+      from var(--portfolio-edge-angle),
+      rgba(139, 92, 246, .2) 0deg 235deg,
+      #8b5cf6 285deg,
+      #d8b4fe 320deg,
+      #ffffff 340deg,
+      #a78bfa 352deg,
+      rgba(139, 92, 246, .2) 360deg
+    );
+    animation-duration: 3s;
+  }
+}
