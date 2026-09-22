@@ -459,7 +459,9 @@
   #process .process-controls label {
     display: none;
   }
-  /* Combined portfolio: the original design tokens and behaviors stay in place. */
+  }
+
+/* Combined portfolio: the original design tokens and behaviors stay in place. */
 .hero { gap: 48px; padding-block: 58px 64px; }
 .hero-copy { min-width: 0; }
 .hero-intro { display: flex; align-items: center; gap: 22px; margin-bottom: 26px; }
@@ -606,5 +608,4 @@
 }
 @media (prefers-reduced-motion: reduce) {
   #services .service-card, #services .service-card-cta { transition: none; }
-}
 }
