@@ -609,3 +609,104 @@
 @media (prefers-reduced-motion: reduce) {
   #services .service-card, #services .service-card-cta { transition: none; }
 }
+
+/* Moving teal edges. Append OUTSIDE all existing @media blocks. */
+@property --portfolio-edge-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --portfolio-glow-rgb: var(--route-rgb, var(--network-rgb, 105, 231, 223));
+  --portfolio-edge-width: 1.5px;
+}
+
+/* Restrict moving borders to key actions and selected frames. */
+:where(.header .button, .hero .actions > .button, #run-demo,
+       #demo, .intake, .project, #services .service-card) {
+  position: relative;
+  isolation: isolate;
+}
+
+@supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
+  :where(.header .button, .hero .actions > .button, #run-demo,
+         #demo, .intake, .project, #services .service-card)::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: 3;
+    padding: var(--portfolio-edge-width);
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--portfolio-edge-angle),
+      transparent 0deg 245deg,
+      rgba(var(--portfolio-glow-rgb), .08) 275deg,
+      rgba(var(--portfolio-glow-rgb), .65) 305deg,
+      rgb(var(--portfolio-glow-rgb)) 330deg,
+      #edfffd 343deg,
+      transparent 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+                  linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: portfolio-edge-turn 5s linear infinite;
+  }
+
+  /* Large frames move more slowly. The demo's existing ::after stays intact. */
+  #demo::before, .intake::before {
+    animation-duration: 9s;
+  }
+
+  /* Keep card collections quiet until a visitor interacts with a card. */
+  .project::before, #services .service-card::before {
+    opacity: 0;
+    animation-duration: 7s;
+    animation-play-state: paused;
+    transition: opacity .2s ease;
+  }
+
+  .project:focus-within::before,
+  #services .service-card:focus-within::before {
+    opacity: 1;
+    animation-play-state: running;
+  }
+
+  @media (hover: hover) {
+    .project:hover::before, #services .service-card:hover::before {
+      opacity: 1;
+      animation-play-state: running;
+    }
+  }
+}
+
+/* A restrained halo accompanies the moving edge. */
+#demo {
+  box-shadow: 0 20px 70px #0003,
+              0 0 20px rgba(var(--portfolio-glow-rgb), .06);
+}
+.intake {
+  box-shadow: 0 0 20px rgba(var(--portfolio-glow-rgb), .05);
+}
+
+@keyframes portfolio-edge-turn {
+  to { --portfolio-edge-angle: 360deg; }
+}
+
+/* Reuse the portfolio's existing Pause background control. */
+body.background-paused :is(.header .button, .hero .actions > .button,
+  #run-demo, #demo, .intake, .project, #services .service-card)::before {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.header .button, .hero .actions > .button, #run-demo,
+      #demo, .intake, .project, #services .service-card)::before {
+    animation: none;
+    transition: none;
+  }
+}
