@@ -1025,3 +1025,42 @@ html { scroll-padding-top: 130px; }
   .footer-compact .footer-flow { max-width: 150px; }
   .footer-compact .footer-path { left: calc(50% + 15px); width: calc(100% - 30px); }
 }
+
+/* Append at the end of styles.css, outside any existing @media block. */
+#case-cta {
+  position: relative;
+  isolation: isolate;
+  box-shadow: 0 0 14px rgba(139, 92, 246, .22);
+}
+
+@supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
+  #case-cta::before {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    z-index: 3;
+    padding: 2.5px;
+    border-radius: 9px;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--portfolio-edge-angle),
+      rgba(139, 92, 246, .2) 0deg 235deg,
+      #8b5cf6 285deg,
+      #d8b4fe 320deg,
+      #ffffff 340deg,
+      #a78bfa 352deg,
+      rgba(139, 92, 246, .2) 360deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: portfolio-edge-turn 3s linear infinite;
+  }
+}
+
+body.background-paused #case-cta::before { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  #case-cta::before { animation: none; }
+}
