@@ -53,23 +53,83 @@ observeNavSections();
 window.addEventListener('resize', observeNavSections, { passive: true });
 if ('ResizeObserver' in window) new ResizeObserver(observeNavSections).observe(header);
 
+// Case-study presentation; project facts and original workflow images stay in projects.js.
+const caseIconPaths = {
+ phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.4 1.8.6 2.8.7a2 2 0 0 1 1.8 2.1Z"/>',
+ calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M8 15h2M14 15h2M8 18h2"/>',
+ check: '<path d="m5 12 4 4L19 6"/>',
+ mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+ filter: '<path d="M3 4h18l-7 8v7l-4 2v-9Z"/>',
+ search: '<circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/>',
+ list: '<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>',
+ document: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
+ inbox: '<path d="m3 12 3-8h12l3 8v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/><path d="M3 12h5l2 3h4l2-3h5"/>',
+ branch: '<rect x="9" y="2" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="16" y="16" width="6" height="6" rx="1"/><path d="M12 8v4M5 16v-4h14v4"/>',
+ spark: '<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/>',
+ send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+ folder: '<path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/>',
+ shield: '<path d="M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7Z"/><path d="m8 12 3 3 5-6"/>'
+};
+const caseFlowIcons = {
+ 'appointment-setter': ['phone', 'calendar', 'check'],
+ 'email-triage': ['mail', 'filter', 'check'],
+ 'job-search': ['search', 'list', 'document'],
+ 'hubspot-lifecycle': ['inbox', 'filter', 'branch'],
+ 'facebook-agent': ['mail', 'spark', 'send'],
+ 'attachment-sorting': ['mail', 'spark', 'folder'],
+ 'xero-export': ['list', 'document', 'check'],
+ 'lead-magnet': ['inbox', 'spark', 'branch'],
+ 'asana-crm': ['list', 'branch', 'mail'],
+ 'lead-enrichment': ['inbox', 'search', 'send'],
+ 'lead-scoring': ['inbox', 'filter', 'branch']
+};
+function caseIcon(name) {
+ return `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${caseIconPaths[name] || caseIconPaths.branch}</svg>`;
+}
+function caseFlow(p) {
+ const icons = caseFlowIcons[p.id] || ['inbox', 'branch', 'check'];
+ return `<ol class="case-flow${p.id === 'email-triage' ? ' case-flow-violet' : ''}" aria-label="Workflow overview">${p.flow.split('→').map((label,i) => `<li><span class="case-flow-icon">${caseIcon(icons[i])}</span><span class="case-flow-label">${escape(label.trim())}</span></li>`).join('')}</ol>`;
+}
+function caseCard(p) {
+ const featured = p.id === 'appointment-setter';
+ const action = `<button class="text-link" data-project="${escape(p.id)}" aria-label="Read case study: ${escape(p.original)}">Read case study <span aria-hidden="true">↗</span></button>`;
+ const facts = featured ? `<dl class="case-card-facts"><div><dt>PROBLEM</dt><dd>Repetitive appointment handling.</dd></div><div><dt>SOLUTION</dt><dd>One connected scheduling flow.</dd></div><div><dt>MODELED OUTCOME</dt><dd>A calendar update and follow-up record.</dd></div></dl>` : `<p class="case-card-result">${caseIcon('check')}<span>${escape(p.result)}</span></p>`;
+ return `<article class="project case-card${featured ? ' case-card-featured' : ''}">
+ <div class="case-card-meta"><span>${featured ? 'FEATURED BUILD' : 'BUILD'} / ${escape(p.number)}</span><span class="badge">${escape(p.platform)}</span></div>
+ <div class="case-card-main"><div class="case-card-copy"><span class="project-tag">${escape(p.category)}</span><h3>${escape(p.original)}</h3><p>${escape(p.short)}</p>${featured ? `<p class="case-card-guard">${caseIcon('shield')}<span>Validation before calendar changes</span></p>` : ''}</div>${caseFlow(p)}</div>
+ <div class="case-card-bottom">${facts}${action}</div>
+ <span class="case-card-disclosure">Self-directed build</span>
+ </article>`;
+}
 let filter = 'All', showAll = false;
 function renderProjects() {
- const visible = projects.filter(p => filter === 'All' ? showAll || p.featured : p.platform === filter);
- $('#projects').innerHTML = visible.map(p => `<article class="project"><div class="project-visual" aria-hidden="true"><div class="project-meta"><span>BUILD ${p.number}</span><span>${p.platform}</span></div><div class="mini-flow">${p.icons.map((icon,i) => `${i ? '<span></span>' : ''}<div class="mini-node">${icon}</div>`).join('')}</div><p class="visual-caption">${p.flow}</p></div><div class="project-body"><span class="project-tag">${p.category}</span><h3>${p.title}</h3><p>${p.short}</p><div class="project-outcome"><span aria-hidden="true">✓</span>${p.result}</div><button class="text-link" data-project="${p.id}" aria-label="Read case study: ${escape(p.original)}">Read the case study <span aria-hidden="true">↗</span></button></div></article>`).join('');
+ const visible = filter === 'All' ? (showAll ? projects : projects.slice(0,3)) : projects.filter(p => p.platform === filter);
+ $('#projects').innerHTML = visible.map(caseCard).join('');
  $('#project-count').textContent = `${visible.length} projects shown`;
  $('#show-all').hidden = filter !== 'All' || showAll;
  $$('[data-project]').forEach(button => button.addEventListener('click', () => openProject(button.dataset.project)));
 }
 $$('[data-filter]').forEach(b => b.addEventListener('click', () => { filter=b.dataset.filter; $$('[data-filter]').forEach(t => t.setAttribute('aria-pressed', t===b)); renderProjects(); }));
-$('#show-all').addEventListener('click', () => { showAll=true; renderProjects(); $('#projects [data-project]').focus(); });
+$('#show-all').addEventListener('click', () => { showAll=true; renderProjects(); $('#projects [data-project="'+projects[3].id+'"]').focus(); });
 const caseDialog = $('#case-dialog');
 function openProject(id) {
  const p = projects.find(p => p.id === id); if(!p) return;
- $('#case-content').innerHTML = `<article class="case-main"><span class="eyebrow">${p.platform.toUpperCase()} / BUILD ${p.number} / 2-MINUTE READ</span><h2 id="case-title">${p.original}</h2><p class="case-deck">${p.short}</p><div class="case-tags"><span class="badge">Self-directed build</span>${p.tools.map(t => `<span class="badge">${t}</span>`).join('')}</div><div class="case-columns"><section><h3>01 / The problem</h3><p>${p.problem}</p></section><section><h3>02 / The automated solution</h3><p>${p.solution}</p></section></div><section class="case-outcome"><h3>03 / The modeled outcome</h3><p>${p.outcome}</p><small>This is a portfolio build. No measured client results or verified time savings are claimed.</small></section><h3>Where a person stays in control</h3><p>${p.checkpoint}</p><details><summary>Explore the workflow architecture <span aria-hidden="true">+</span></summary><ol class="case-steps">${p.steps.map(s => `<li>${s}</li>`).join('')}</ol>${p.image?`<a href="/assets/${p.image}" target="_blank" rel="noopener noreferrer" aria-label="Open original workflow overview in a new tab"><img class="case-image" src="/assets/${p.image}" alt="${escape(p.original)} workflow overview" loading="lazy"></a><p class="image-note">Original portfolio overview. Use the written steps above for the readable architecture.</p>`:''}<h3>What to validate in production</h3><p>${p.measure}</p></details><button class="button" id="case-cta">Let’s build something like this <span aria-hidden="true">↗</span></button></article>`;
+ $('#case-content').innerHTML = `<article class="case-main case-study-redesign">
+ <span class="eyebrow">${escape(p.platform.toUpperCase())} / BUILD ${escape(p.number)} / 2-MINUTE READ</span>
+ <h2 id="case-title">${escape(p.original)}</h2><p class="case-deck">${escape(p.short)}</p>
+ <div class="case-tags"><span class="badge">Self-directed build</span>${p.tools.map(t => `<span class="badge">${escape(t)}</span>`).join('')}</div>
+ <div class="case-workflow-panel">${caseFlow(p)}</div>
+ <section class="case-story-row"><span class="case-story-number" aria-hidden="true">01</span><div><h3>The problem</h3><p>${escape(p.problem)}</p></div></section>
+ <section class="case-story-row"><span class="case-story-number" aria-hidden="true">02</span><div><h3>The automated solution</h3><p>${escape(p.solution)}</p></div></section>
+ <section class="case-story-row case-story-outcome"><span class="case-story-number" aria-hidden="true">03</span><div><h3>The modeled outcome</h3><p>${escape(p.outcome)}</p><small>This is a portfolio build. No measured client results or verified time savings are claimed.</small></div></section>
+ <section class="case-human-control">${caseIcon('shield')}<div><h3>Human control built in</h3><p>${escape(p.checkpoint)}</p></div></section>
+ <details><summary>Explore the workflow architecture <span aria-hidden="true">+</span></summary><ol class="case-steps">${p.steps.map(s => `<li>${escape(s)}</li>`).join('')}</ol>${p.image ? `<a href="/assets/${escape(p.image)}" target="_blank" rel="noopener noreferrer" aria-label="Open original workflow overview in a new tab"><img class="case-image" src="/assets/${escape(p.image)}" alt="${escape(p.original)} workflow overview" loading="lazy"></a><p class="image-note">Original portfolio overview. Use the written steps above for the readable architecture.</p>` : ''}<h3>What to validate in production</h3><p>${escape(p.measure)}</p></details>
+ <button class="button" id="case-cta">Let’s build something like this <span aria-hidden="true">↗</span></button>
+ </article>`;
  caseDialog.showModal(); caseDialog.scrollTop=0;
  $('#case-cta').addEventListener('click', () => { caseDialog.close(); prefill(p.type); });
 }
+
 $$('dialog .close-button').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
 $$('dialog').forEach(d => d.addEventListener('click', e => { if(e.target===d) { const r=d.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close(); } }));
 // Presentation only; native accordion behavior stays intact.
