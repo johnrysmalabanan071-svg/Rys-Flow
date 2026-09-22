@@ -119,10 +119,10 @@
     height: 28px;
     margin-top: -2px;
   }
-}
   #services .service-body {
     padding: 0 12px 12px 10px;
   }
+}
   /* Header additions; the existing menu and CTA layout remain in place. */
 .header {
   --nav-accent: var(--route-rgb, var(--network-rgb, 105, 231, 223));
@@ -459,5 +459,4 @@
   #process .process-controls label {
     display: none;
   }
-}
 }
