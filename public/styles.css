@@ -170,7 +170,7 @@
   color: var(--muted);
 }
 #about .dev-environment strong { font-weight: 500; }
-  /* Header appearance */
+/* Header appearance */
 .header {
   --nav-accent: var(--route-rgb, var(--network-rgb, 105, 231, 223));
   background: rgba(10, 17, 22, .82);
