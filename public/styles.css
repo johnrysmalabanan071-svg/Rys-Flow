@@ -623,14 +623,14 @@
 }
 
 /* Restrict moving borders to key actions and selected frames. */
-:where(.header .button, .hero .actions > .button, #run-demo,
+:where(.header .button, .hero .actions > .button, #run-demo, #form-next,
        #demo, .intake, .project, #services .service-card) {
   position: relative;
   isolation: isolate;
 }
 
 @supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
-  :where(.header .button, .hero .actions > .button, #run-demo,
+  :where(.header .button, .hero .actions > .button, #run-demo, #form-next,
          #demo, .intake, .project, #services .service-card)::before {
     content: "";
     position: absolute;
@@ -699,25 +699,25 @@
 
 /* Reuse the portfolio's existing Pause background control. */
 body.background-paused :is(.header .button, .hero .actions > .button,
-  #run-demo, #demo, .intake, .project, #services .service-card)::before {
+  #run-demo, #form-next, #demo, .intake, .project, #services .service-card)::before {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :is(.header .button, .hero .actions > .button, #run-demo,
+  :is(.header .button, .hero .actions > .button, #run-demo, #form-next,
       #demo, .intake, .project, #services .service-card)::before {
     animation: none;
     transition: none;
   }
 }
 
-/* Violet borders on the three primary buttons only. */
-:is(.header .button, .hero .actions > .button, #run-demo) {
+/* Violet borders on the primary buttons and intake Continue button. */
+:is(.header .button, .hero .actions > .button, #run-demo, #form-next) {
   box-shadow: 0 0 14px rgba(139, 92, 246, .22);
 }
 
 @supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
-  :is(.header .button, .hero .actions > .button, #run-demo)::before {
+  :is(.header .button, .hero .actions > .button, #run-demo, #form-next)::before {
     inset: -3px;
     padding: 2.5px;
     border-radius: 9px;
