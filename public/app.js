@@ -7,6 +7,51 @@ const menu = $('.menu-toggle');
 menu.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; menu.setAttribute('aria-expanded', open); $('#nav-links').classList.toggle('open', open); });
 $$('#nav-links a').forEach(a => a.addEventListener('click', () => { menu.setAttribute('aria-expanded', 'false'); $('#nav-links').classList.remove('open'); }));
 document.addEventListener('keydown', e => { if(e.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') { menu.click(); menu.focus(); } });
+// Header presentation: scroll tint and one active section in the reading band.
+const header = $('.header');
+const sectionLinks = $$('#nav-links a[href^="#"]');
+const navSections = ['work', 'services', 'process', 'about', 'contact']
+  .map(id => document.getElementById(id)).filter(Boolean);
+function markNavSection(id) {
+  sectionLinks.forEach(link => {
+    const active = link.getAttribute('href') === `#${id}`;
+    link.classList.toggle('is-active', active);
+    if (active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}
+const updateHeaderTint = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
+window.addEventListener('scroll', updateHeaderTint, { passive: true });
+window.addEventListener('pageshow', updateHeaderTint);
+updateHeaderTint();
+
+let sectionObserver, observedHeaderHeight = -1, observedViewportHeight = -1;
+function observeNavSections() {
+  const headerHeight = Math.ceil(header.getBoundingClientRect().height);
+  const viewportHeight = window.innerHeight;
+  if (headerHeight === observedHeaderHeight && viewportHeight === observedViewportHeight) return;
+  observedHeaderHeight = headerHeight; observedViewportHeight = viewportHeight;
+  sectionObserver?.disconnect();
+  markNavSection(null);
+  if (!('IntersectionObserver' in window)) return;
+  const visibleSections = new Set();
+  const bottomInset = Math.max(0, viewportHeight - Math.max(headerHeight + 1, viewportHeight * .45));
+  const observer = new IntersectionObserver(entries => {
+    if (sectionObserver !== observer) return;
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRect.height > 0) visibleSections.add(entry.target.id);
+      else visibleSections.delete(entry.target.id);
+    });
+    // Prefer the incoming section when the previous section's trailing edge
+    // remains visible above an anchor (the page reserves space for the header).
+    markNavSection(navSections.filter(section => visibleSections.has(section.id)).at(-1)?.id);
+  }, { rootMargin: `-${headerHeight}px 0px -${bottomInset}px 0px`, threshold: 0 });
+  sectionObserver = observer;
+  navSections.forEach(section => observer.observe(section));
+}
+observeNavSections();
+window.addEventListener('resize', observeNavSections, { passive: true });
+if ('ResizeObserver' in window) new ResizeObserver(observeNavSections).observe(header);
 
 let filter = 'All', showAll = false;
 function renderProjects() {
