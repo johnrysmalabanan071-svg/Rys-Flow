@@ -234,4 +234,230 @@
 #about .dev-environment strong {
   font-weight: 500;
 }
+/* All styling is limited to the Process section. */
+#process {
+  --process-rgb: var(--route-rgb, var(--network-rgb, 105, 231, 223));
+}
+
+/* Small caption and accessible pause control */
+#process .process-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 32px 0 18px;
+  color: var(--muted, #a0b1ba);
+  font-size: .7rem;
+}
+
+#process .process-controls > span {
+  font-family: Consolas, monospace;
+  letter-spacing: .08em;
+}
+
+#process .process-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  min-height: 32px;
+}
+
+#process .process-controls input {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: rgb(var(--process-rgb));
+}
+
+#process .process-controls input:focus-visible {
+  outline: 2px solid rgb(var(--process-rgb));
+  outline-offset: 4px;
+}
+
+/* Four connected cards */
+#process .process-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#process .process-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #2b3e44;
+  border-radius: 16px;
+  background: #101d23;
+  transition: border-color .2s ease;
+}
+
+#process .process-step:hover {
+  border-color: rgba(var(--process-rgb), .55);
+}
+
+/* Decorative connections */
+#process .process-step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 37px;
+  left: 100%;
+  width: 26px;
+  color: rgba(var(--process-rgb), .65);
+  text-align: center;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+/* Icon and step number */
+#process .process-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+#process .process-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(var(--process-rgb), .22);
+  border-radius: 12px;
+  background: rgba(var(--process-rgb), .05);
+  color: rgb(var(--process-rgb));
+}
+
+/* Highlight each step in sequence; only opacity animates. */
+#process .process-icon::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid rgb(var(--process-rgb));
+  border-radius: inherit;
+  box-shadow: 0 0 18px rgba(var(--process-rgb), .18);
+  opacity: 0;
+  animation: process-activation 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+#process .process-step:nth-child(2) .process-icon::after {
+  animation-delay: 2s;
+}
+
+#process .process-step:nth-child(3) .process-icon::after {
+  animation-delay: 4s;
+}
+
+#process .process-step:nth-child(4) .process-icon::after {
+  animation-delay: 6s;
+}
+
+#process:has(#process-pause:checked) .process-icon::after {
+  animation-play-state: paused;
+}
+
+#process .process-number {
+  color: var(--muted, #a0b1ba);
+  font: .65rem Consolas, monospace;
+  letter-spacing: .06em;
+}
+
+/* Card text */
+#process .process-step h3 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+#process .process-step p {
+  margin: 0 0 24px;
+  color: var(--muted, #a0b1ba);
+  font-size: .875rem;
+  line-height: 1.7;
+}
+
+/* Align deliverables at the bottom of each row. */
+#process .process-step small {
+  display: block;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #2b3e44;
+  color: #d5e2e5;
+  font-size: .75rem;
+  line-height: 1.6;
+}
+
+#process .process-step small > span {
+  display: block;
+  margin-bottom: 4px;
+  color: rgb(var(--process-rgb));
+  font: .6rem Consolas, monospace;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@keyframes process-activation {
+  0%, 25%, 100% { opacity: 0; }
+  8%, 17% { opacity: 1; }
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  #process .process-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #process .process-step:nth-child(2)::after {
+    display: none;
+  }
+}
+
+/* Mobile: a vertical workflow */
+@media (max-width: 600px) {
+  #process .process-flow {
+    grid-template-columns: 1fr;
+  }
+
+  #process .process-step {
+    padding: 22px;
+  }
+
+  #process .process-step-top {
+    margin-bottom: 18px;
+  }
+
+  #process .process-step:not(:last-child)::after {
+    content: "↓";
+    display: block;
+    top: 100%;
+    left: calc(50% - 12px);
+    width: 24px;
+    line-height: 24px;
+  }
+}
+
+/* Respect the visitor's motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  #process .process-icon::after {
+    animation: none;
+  }
+
+  #process .process-step {
+    transition: none;
+  }
+
+  #process .process-controls label {
+    display: none;
+  }
+}
 }
