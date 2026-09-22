@@ -459,4 +459,152 @@
   #process .process-controls label {
     display: none;
   }
+  /* Combined portfolio: the original design tokens and behaviors stay in place. */
+.hero { gap: 48px; padding-block: 58px 64px; }
+.hero-copy { min-width: 0; }
+.hero-intro { display: flex; align-items: center; gap: 22px; margin-bottom: 26px; }
+.hero-portrait { width: 112px; height: 124px; flex: 0 0 auto; object-fit: cover; object-position: center 32%; border-radius: 12px; border: 1px solid #3c535a; }
+.hero .hero-intro .eyebrow { margin: 0 0 9px; font-size: .625rem; }
+.hero-name { font-size: 1.25rem; font-weight: 600; letter-spacing: -.035em; margin: 0 0 7px; line-height: 1.2; }
+.hero-location { color: var(--muted); font-size: .75rem; line-height: 1.6; margin: 0; }
+.hero h1 { font-size: clamp(3.2rem, 4.8vw, 4.65rem); }
+.hero-description { max-width: 450px; font-size: 1rem; line-height: 1.8; margin-bottom: 26px; }
+.hero-note { margin-top: 22px; }
+.hero .actions { gap: 12px 22px; }
+.demo > .micro:last-child { margin: 0; font-size: .65rem; }
+.proof-strip { padding-block: 23px; }
+.nav-links { gap: 24px; }
+
+/* About: editorial introduction beside four quiet feature cards. */
+.about-merged { display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; row-gap: 26px; align-items: start; }
+.about-story h2 { line-height: 1.13; }
+.about-story > p:not(.eyebrow) { color: var(--muted); font-size: .95rem; line-height: 1.85; max-width: 520px; }
+.about-story .text-link { margin-top: 5px; }
+.about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-top: 3px; }
+.about-features article { padding: 25px 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+.feature-icon { display: inline-grid; place-items: center; width: 42px; height: 42px; border: 1px solid #315458; border-radius: 10px; color: var(--accent); background: #69e7df08; flex-shrink: 0; }
+.feature-icon svg { display: block; }
+.about-features h3 { font-size: 1rem; line-height: 1.35; letter-spacing: -.025em; margin: 21px 0 11px; }
+.about-features p { font-size: .8rem; line-height: 1.8; color: var(--muted); margin: 0; }
+#about .dev-environment { grid-column: 2; margin: 0; font-size: .7rem; line-height: 1.9; }
+
+/* Experience: chronological records with a thin connecting line. */
+.experience-section { padding-block: 84px; background: #101a20; border-block: 1px solid var(--line); }
+.experience-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 80px; }
+.experience-intro > p:not(.eyebrow) { color: var(--muted); font-size: .95rem; line-height: 1.85; max-width: 420px; }
+.experience-intro .eyebrow { max-width: 330px; }
+.experience-timeline { list-style: none; margin: 0; padding: 0 0 0 28px; border-left: 1px solid #355057; }
+.experience-timeline > li { position: relative; padding: 0 0 28px; }
+.experience-timeline > li::before { content: ''; position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); left: -33px; top: 8px; box-shadow: 0 0 0 5px #173035; }
+.experience-timeline > li:last-child { padding-bottom: 0; }
+.experience-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.experience-top .eyebrow { font-size: .625rem; margin: 0; }
+.experience-date { color: var(--muted); font-size: .7rem; white-space: nowrap; }
+.experience-timeline h3 { font-size: 1.3rem; line-height: 1.3; margin: 0 0 9px; }
+.experience-previous { color: #c4d2d6; font-size: .8rem; margin-bottom: 6px; }
+.experience-place { color: var(--muted); font-size: .7rem; margin-bottom: 17px; }
+.experience-timeline ul { padding-left: 18px; color: var(--muted); font-size: .85rem; line-height: 1.8; margin: 0 0 18px; }
+.experience-timeline ul li + li { margin-top: 7px; }
+.experience-timeline ul li::marker { color: var(--accent); }
+.experience-transfer { font-size: .7rem; color: #bdcecf; padding-top: 12px; border-top: 1px solid var(--line); margin: 0; }
+.experience-education { display: flex; align-items: center; gap: 15px; margin: 28px 0 0 28px; padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.experience-education h3 { font-size: .9rem; margin: 0 0 5px; letter-spacing: -.015em; }
+.experience-education p { font-size: .75rem; color: var(--muted); margin: 0; }
+.experience-credentials { margin-left: 28px; margin-top: 10px; }
+.experience-credentials details { border-bottom: 1px solid var(--line); }
+.experience-credentials summary { padding-block: 16px; font-size: .8rem; }
+.experience-credentials .credential-links { columns: 2; column-gap: 22px; font-size: .75rem; }
+.experience-credentials .credential-links li { break-inside: avoid; }
+
+/* Six services, with the same quiet surface and action styles as the work. */
+#services { padding-block: 84px 64px; }
+#services .section-head { margin-bottom: 34px; }
+#services .service-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+#services .service-card { display: flex; flex-direction: column; min-width: 0; padding: 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); transition: border-color .2s ease; }
+#services .service-card:hover, #services .service-card:focus-within { border-color: #4b7578; }
+#services .service-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+#services .service-card-number { color: var(--muted); font: .65rem Consolas, monospace; }
+#services .service-card h3 { font-size: 1.25rem; line-height: 1.3; margin: 0 0 14px; }
+#services .service-card p { font-size: .875rem; line-height: 1.8; color: var(--muted); margin-bottom: 24px; }
+#services .service-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); }
+#services .service-card-bottom small { color: #b8c9ce; font-size: .7rem; line-height: 1.6; }
+#services .service-card-cta { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; border: 1px solid #35535a; color: var(--accent); font-size: 1.2rem; transition: background .2s ease; }
+#services .service-card-cta:hover { background: #69e7df12; }
+.delivery-process { border-top: 1px solid var(--line); margin-top: 36px; padding-top: 28px; }
+.delivery-process > div { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.delivery-process .eyebrow { font-size: .625rem; margin: 0; }
+.delivery-process h3 { font-size: 1rem; margin: 0; }
+.delivery-process ol { display: grid; grid-template-columns: repeat(4, 1fr); list-style: none; padding: 0; margin: 0; }
+.delivery-process li { color: #c3d2d5; font-size: .8rem; padding-left: 20px; border-left: 1px solid var(--line); }
+.delivery-process li:first-child { padding-left: 0; border: 0; }
+.delivery-process li span { display: block; margin-bottom: 9px; color: var(--accent); font: .6rem Consolas, monospace; letter-spacing: .08em; }
+.tools-section { padding-block: 65px 75px; border-top: 0; }
+.contact-section { padding-block: 85px; }
+
+@media (max-width: 1200px) {
+  .header .availability { display: none; }
+  .nav-links { gap: 22px; }
+  .about-merged, .experience-layout { column-gap: 40px; }
+  .hero { gap: 32px; }
+}
+@media (max-width: 1000px) {
+  .about-merged { grid-template-columns: 1fr; gap: 28px; }
+  .about-story { max-width: 650px; }
+  .about-story h2 br:nth-of-type(2) { display: none; }
+  .about-story > p:not(.eyebrow) { max-width: none; }
+  #about .dev-environment { grid-column: 1; }
+  .experience-layout { grid-template-columns: 1fr; gap: 35px; }
+  .experience-intro > p:not(.eyebrow) { max-width: 650px; }
+  #services .service-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* Collapse early enough that the full navigation never crowds the identity. */
+@media (max-width: 900px) {
+  .nav { min-height: 76px; }
+  .menu-toggle { display: flex; align-items: center; gap: 15px; min-height: 44px; font-size: .8rem; }
+  .nav-links { display: none; position: absolute; top: 76px; left: 0; right: 0; padding: 22px 24px; flex-direction: column; align-items: stretch; gap: 8px; background: var(--panel); border-bottom: 1px solid var(--line); font-size: .95rem; }
+  .nav-links.open { display: flex; }
+  .nav-links > a { padding-block: 10px; }
+  .nav-links > .button { display: inline-flex; margin-top: 8px; }
+}
+@media (max-width: 850px) {
+  .hero { padding-top: 42px; gap: 36px; }
+  .hero h1 { font-size: clamp(3.4rem, 8vw, 4.7rem); }
+  .hero-description { max-width: 540px; }
+  .hero .demo { max-width: none; }
+  .experience-section, #services { padding-block: 65px; }
+  .tools-section { padding-block: 55px; }
+}
+@media (max-width: 600px) {
+  .hero-intro { gap: 16px; margin-bottom: 25px; }
+  .hero-portrait { width: 88px; height: 100px; }
+  .hero-name { font-size: 1.15rem; }
+  .hero .hero-intro .eyebrow { font-size: .55rem; letter-spacing: .07em; }
+  .hero-location { font-size: .7rem; }
+  .hero h1 { font-size: clamp(3rem, 11.5vw, 4.3rem); }
+  .hero-description { font-size: .95rem; }
+  .hero { padding-bottom: 40px; }
+  .about-features { gap: 12px; }
+  .about-features article { padding: 20px 16px; }
+  .about-features h3 { font-size: .9rem; }
+  .about-features p { font-size: .775rem; }
+  .about-story h2, .experience-intro h2 { font-size: 2.2rem; }
+  .experience-timeline { padding-left: 22px; }
+  .experience-timeline > li::before { left: -27px; }
+  .experience-timeline h3 { font-size: 1.2rem; }
+  .experience-education, .experience-credentials { margin-left: 22px; }
+  .experience-education { padding: 16px; gap: 12px; }
+  .experience-credentials .credential-links { columns: 1; }
+  #services .service-cards { grid-template-columns: 1fr; gap: 16px; }
+  #services .service-card { padding: 24px; }
+  .delivery-process ol { grid-template-columns: 1fr 1fr; gap: 24px 12px; }
+  .delivery-process li:nth-child(3) { padding-left: 0; border: 0; }
+  .contact-section { padding-block: 65px; }
+}
+@media (max-width: 380px) {
+  .about-features { grid-template-columns: 1fr; }
+  .hero-name { font-size: 1.05rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #services .service-card, #services .service-card-cta { transition: none; }
+}
 }
