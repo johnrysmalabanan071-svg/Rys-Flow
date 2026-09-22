@@ -27,7 +27,76 @@ function openProject(id) {
 }
 $$('dialog .close-button').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
 $$('dialog').forEach(d => d.addEventListener('click', e => { if(e.target===d) { const r=d.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close(); } }));
-$('#services-list').innerHTML = services.map(([name,description,type],i) => `<details ${i===0?'open':''}><summary><span class="service-number">0${i+1}</span>${name}<span aria-hidden="true">+</span></summary><div class="service-body"><p>${description}</p><button class="text-link" data-service="${type}">Talk through this workflow ↗</button></div></details>`).join('');
+// Presentation only; native accordion behavior stays intact.
+const serviceVisuals = [
+  [
+    'Less busywork. More connected tools.',
+    '<rect x="3" y="3" width="6" height="6" rx="1.5"/><rect x="15" y="15" width="6" height="6" rx="1.5"/><path d="M9 6h5a4 4 0 0 1 4 4v5M6 9v9h9"/>'
+  ],
+  [
+    'Contacts and follow-ups, in sync.',
+    '<circle cx="9" cy="8" r="3"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M16 5a3 3 0 0 1 0 6M21 21v-2a6 6 0 0 0-3-5.2"/>'
+  ],
+  [
+    'Fewer steps. Smoother daily work.',
+    '<path d="M4 6h16M4 12h16M4 18h16"/><circle cx="9" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/>'
+  ],
+  [
+    'Helpful answers, around the clock.',
+    '<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-3 3V11.5a10 10 0 0 1 20 0Z"/><path d="M7 10h8M7 14h5"/>'
+  ],
+  [
+    'Faster replies. Fewer missed leads.',
+    '<path d="M3 4h18l-7 8v7l-4 2v-9Z"/>'
+  ],
+  [
+    'Your tools, finally working together.',
+    '<path d="m8 5-7 7 7 7m8-14 7 7-7 7m-3-16-2 18"/>'
+  ]
+];
+
+$('#services-list').innerHTML = services.map(
+  ([name, description, type], i) => {
+    const [subtitle, paths] = serviceVisuals[i];
+
+    return `
+      <details ${i === 0 ? 'open' : ''}>
+        <summary>
+          <span class="service-number">0${i + 1}</span>
+
+          <span class="service-icon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              focusable="false"
+            >${paths}</svg>
+          </span>
+
+          <span class="service-heading">
+            <span class="service-title">${name}</span>
+            <small class="service-subtitle">${subtitle}</small>
+          </span>
+
+          <span class="service-toggle" aria-hidden="true">+</span>
+        </summary>
+
+        <div class="service-body">
+          <p>${description}</p>
+          <button class="text-link" data-service="${type}">
+            Talk through this workflow ↗
+          </button>
+        </div>
+      </details>
+    `;
+  }
+).join('');
 $$('[data-service]').forEach(b => b.addEventListener('click', () => prefill(b.dataset.service)));
 renderProjects();
 
