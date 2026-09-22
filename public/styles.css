@@ -864,3 +864,109 @@ body.background-paused .site-footer .footer-path::after { animation-play-state: 
   .site-footer .footer-path { top: 19px; left: calc(50% + 27px); width: calc(100% - 54px); }
   .site-footer .footer-flow li { font-size: .6875rem; }
 }
+
+/* Floating navigation. Reuses the existing menu, scroll and active-section JS. */
+html { scroll-padding-top: 130px; }
+.header, .header.is-scrolled {
+  padding-block: 16px 10px;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+.header .nav {
+  position: relative;
+  width: min(1360px, calc(100% - 48px));
+  min-height: 84px;
+  padding: 14px 24px;
+  justify-content: flex-start;
+  gap: 24px;
+  border: 1px solid rgba(var(--nav-accent), .22);
+  border-radius: 18px;
+  background: rgba(12, 25, 30, .92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 12px 32px #0002, inset 0 1px 0 rgba(var(--nav-accent), .05);
+  pointer-events: auto;
+  transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.header.is-scrolled .nav {
+  background: rgba(12, 25, 30, .98);
+  border-color: rgba(var(--nav-accent), .32);
+  box-shadow: 0 12px 32px #0004;
+}
+.header .brand { flex-shrink: 0; gap: 16px; text-decoration: none; }
+.header .brand > .monogram { padding-right: 16px; border-right: 1px solid var(--line); }
+.header .availability {
+  display: inline-flex;
+  padding: 8px 12px;
+  border: 1px solid rgba(var(--nav-accent), .13);
+  border-radius: 10px;
+  background: rgba(var(--nav-accent), .025);
+  font-size: .65rem;
+  flex-shrink: 0;
+}
+.header .nav-links { margin-left: auto; gap: 5px; font-size: .8rem; }
+.header .nav-links > a:not(.button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background-color .18s ease, color .18s ease;
+}
+.header .nav-links > a:not(.button):hover { background: rgba(var(--nav-accent), .045); }
+.header .nav-links > a:not(.button).is-active {
+  color: rgb(var(--nav-accent));
+  background: rgba(var(--nav-accent), .09);
+  text-decoration: none;
+}
+.header .nav-links > .button { display: inline-flex; margin-left: 12px; white-space: nowrap; }
+.header .nav-links > .button.is-active { box-shadow: 0 0 14px rgba(139, 92, 246, .22); }
+.header .menu-toggle { display: none; }
+.header a:focus-visible, .header .menu-toggle:focus-visible {
+  outline: 2px solid rgb(var(--nav-accent)); outline-offset: 4px;
+}
+@media (max-width: 1200px) {
+  .header .availability { display: none; }
+  .header .nav { gap: 16px; }
+}
+@media (max-width: 1040px) {
+  .header .nav { min-height: 76px; padding: 12px 20px; }
+  .header .menu-toggle {
+    display: inline-flex; align-items: center; gap: 12px; margin-left: auto;
+    min-height: 44px; padding: 8px 12px; font-size: .8rem;
+    border: 1px solid rgba(var(--nav-accent), .2); border-radius: 10px;
+  }
+  .header .menu-toggle:hover, .header .menu-toggle[aria-expanded="true"] { background: rgba(var(--nav-accent), .08); }
+  .header .nav-links {
+    display: none; position: absolute; top: calc(100% + 10px); left: 0; right: 0;
+    margin: 0; padding: 18px; gap: 6px; flex-direction: column; align-items: stretch;
+    background: #0e1b20; border: 1px solid rgba(var(--nav-accent), .22);
+    border-radius: 16px; box-shadow: 0 16px 30px #0005;
+    max-height: calc(100vh - 130px); max-height: calc(100dvh - 130px); overflow-y: auto;
+  }
+  .header .nav-links.open { display: flex; }
+  .header .nav-links > a:not(.button) { justify-content: flex-start; padding: 12px; }
+  .header .nav-links > .button { margin: 8px 0 0; }
+}
+@media (max-width: 600px) {
+  html { scroll-padding-top: 104px; }
+  .header, .header.is-scrolled { padding-block: 10px 8px; }
+  .header .nav { width: calc(100% - 24px); min-height: 70px; padding: 10px 12px; gap: 10px; border-radius: 14px; }
+  .header .brand { gap: 10px; font-size: .75rem; }
+  .header .brand > .monogram { padding-right: 10px; font-size: 1.6rem; }
+  .header .brand-sub { font-size: .45rem; letter-spacing: .08em; }
+  .header .menu-toggle { padding-inline: 10px; gap: 8px; font-size: .75rem; }
+}
+@media (max-width: 360px) {
+  .header .brand > .monogram { padding-right: 0; border: 0; }
+  .header .brand { gap: 8px; }
+  .header .nav { gap: 6px; padding-inline: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .header .nav, .header .nav-links > a:not(.button) { transition: none; }
+}
