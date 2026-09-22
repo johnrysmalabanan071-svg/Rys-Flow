@@ -170,4 +170,68 @@
   color: var(--muted);
 }
 #about .dev-environment strong { font-weight: 500; }
+  /* Header appearance */
+.header {
+  --nav-accent: var(--route-rgb, var(--network-rgb, 105, 231, 223));
+  background: rgba(10, 17, 22, .82);
+  border-bottom-color: rgba(160, 177, 186, .12);
+  transition: background-color .18s ease, border-color .18s ease;
+}
+
+.header.is-scrolled {
+  background: rgba(10, 17, 22, .98);
+  border-bottom-color: rgba(160, 177, 186, .27);
+}
+
+/* Availability badge */
+.header .availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: .7rem;
+  white-space: nowrap;
+}
+
+.header .availability-dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: rgb(var(--nav-accent));
+}
+
+/* Active navigation link */
+.header .nav-links > a:not(.button).is-active {
+  color: rgb(var(--nav-accent));
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+.header .nav-links > .button.is-active {
+  box-shadow:
+    inset 0 0 0 2px var(--bg),
+    0 0 0 3px rgba(var(--nav-accent), .18);
+}
+
+/* Keep narrower headers uncluttered */
+@media (max-width: 1100px) {
+  .header .availability {
+    display: none;
+  }
+}
+
+/* Quiet personal tool list in About */
+#about .dev-environment {
+  margin: 20px 0 0;
+  font-size: .8rem;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+#about .dev-environment strong {
+  font-weight: 500;
+}
 }
