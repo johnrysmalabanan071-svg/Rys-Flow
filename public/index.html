@@ -27,21 +27,29 @@
   <div id="nav-links" class="nav-links"><a href="#about">About</a><a href="#experience">Experience</a><a href="#work">Work</a><a href="#services">Services</a><a href="#tools">Tools</a><a class="button small" href="#contact">Let’s build something <span aria-hidden="true">↗</span></a></div>
 </nav></header>
 <main id="main">
-<section class="hero wrap" id="top">
+<section class="hero wrap hero-portrait-layout" id="top" aria-labelledby="hero-title">
   <div class="hero-copy">
-    <div class="hero-intro">
-      <img class="hero-portrait" src="/assets/portrait.webp" width="640" height="640" alt="John Rys Clanor" fetchpriority="high" decoding="async">
-      <div><p class="eyebrow">AI AUTOMATION SPECIALIST</p><p class="hero-name">Hi, I’m John Rys.</p><p class="hero-location">Based in the Philippines.<br>Building for teams worldwide.</p></div>
-    </div>
-    <h1>Your next level.<br><span>Automated.</span></h1>
+    <p class="eyebrow">AI AUTOMATION SPECIALIST</p>
+    <p class="hero-name">Hi, I’m John Rys.</p>
+    <h1 id="hero-title">Your next level.<br><span>Automated.</span></h1>
   <p class="hero-description">Your time belongs to the work that matters. I build AI agents and connected workflows that take care of the repeatable parts.</p>
   <div class="actions"><a class="button" href="#contact">Find your first automation <span aria-hidden="true">↗</span></a><a class="text-link" href="#work">Explore the work <span aria-hidden="true">↓</span></a></div>
-  <div class="hero-note"><span class="line"></span> Built for owners, agencies & teams with a lot on their plate.</div>
+    <div class="hero-metrics" aria-label="Portfolio at a glance"><p><strong>11</strong><span>Self-directed builds</span></p><p><strong>06</strong><span>Automation specialties</span></p><p><strong>01</strong><span>Partner, from audit to handoff</span></p></div>
   </div>
-  <div class="demo" id="demo" aria-labelledby="demo-heading">
-    <div class="demo-top"><span class="eyebrow">THE AUTOMATION PLAYGROUND</span><span class="badge">Interactive demo</span></div>
-    <h2 id="demo-heading">One lead. Zero loose ends.</h2><p class="muted">Send a sample inquiry through a working set of routing rules.</p>
-    <div class="demo-input"><label for="demo-scenario">Sample inquiry</label><select id="demo-scenario"><option value="ready">A team ready to automate lead follow-up</option><option value="exploring">A founder exploring what’s possible</option><option value="support">An existing client needing support</option></select></div>
+  <figure class="hero-profile">
+    <img src="/assets/portrait.webp" width="640" height="640" alt="John Rys Clanor" fetchpriority="high" decoding="async">
+    <figcaption><strong>John Rys Clanor</strong><span>Based in the Philippines · Working worldwide</span></figcaption>
+  </figure>
+  <div class="demo demo-wide" id="demo" aria-labelledby="demo-heading">
+    <div class="demo-summary">
+      <div class="demo-top"><span class="eyebrow">THE AUTOMATION PLAYGROUND</span><span class="badge">Interactive demo</span></div>
+      <h2 id="demo-heading">One lead. Zero loose ends.</h2>
+      <p class="muted">Try a sample inquiry. See the system respond.</p>
+      <div class="demo-bottom"><button id="run-demo" class="button small"><span aria-hidden="true">▶</span> Run the workflow</button><span class="micro">Sample data. No messages sent.</span></div>
+    <button id="background-toggle" class="background-control" type="button" aria-pressed="false" hidden>Pause background</button>
+    </div>
+    <div class="demo-flow">
+      <div class="demo-input"><label for="demo-scenario">Sample inquiry</label><select id="demo-scenario"><option value="ready">A team ready to automate lead follow-up</option><option value="exploring">A founder exploring what’s possible</option><option value="support">An existing client needing support</option></select></div>
     <div class="workflow" aria-label="Automation workflow steps">
       <button class="node" data-node="0" aria-label="Inspect Capture step"><span class="node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg></span><strong>Capture</strong><small>New inquiry</small></button>
       <span class="connector" aria-hidden="true"></span>
@@ -52,12 +60,9 @@
       <button class="node" data-node="3" aria-label="Inspect Respond step"><span class="node-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><strong>Respond</strong><small>Close the loop</small></button>
     </div>
     <div id="demo-output" class="demo-output" role="status" aria-live="polite"><span class="output-label">READY WHEN YOU ARE</span><p>One click. Follow the journey from inquiry to next step.</p></div>
-    <div class="demo-bottom"><button id="run-demo" class="button small"><span aria-hidden="true">▶</span> Run the workflow</button><span class="micro">Sample data. No messages sent.</span></div>
-    <button id="background-toggle" class="background-control" type="button" aria-pressed="false" hidden>Pause background</button>
-    <p class="micro">Try a scenario. See how one inquiry finds its next step.</p>
+    </div>
   </div>
 </section>
-<div class="proof-strip wrap"><p><strong>11</strong><span>Self-directed builds</span></p><p><strong>06</strong><span>Automation specialties</span></p><p><strong>01</strong><span>Partner, from audit to handoff</span></p><span class="location">BASED IN THE PHILIPPINES<br><b>Working worldwide ↗</b></span></div>
 <section class="section wrap about-merged" id="about" aria-labelledby="about-title">
   <div class="about-story"><p class="eyebrow">01 / THE PERSON BEHIND THE SYSTEMS</p>
     <h2 id="about-title">Systems thinking,<br>translated into <br><span class="accent">simple workflows.</span></h2>
