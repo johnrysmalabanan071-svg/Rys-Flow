@@ -5,9 +5,7 @@ export const toolGroups = [
     ['OpenAI','openai'], ['Claude','claude'], ['Vapi','vapi'], ['Airtable','airtable'],
     ['HubSpot','hubspot'], ['Apollo','apollo'], ['Asana','asana'], ['Xero','xero'],
     ['Supabase','supabase'], ['Vercel','vercel'], ['GitHub','github'], ['Python','python'],
-    ['JavaScript','javascript'], ['REST APIs','rest-api'], ['Webhooks','webhooks'], ['SQL','sql'], ['Google Cloud','google-cloud'],
-    ['Zcode','zcode'], ['OpenCode','opencode'], ['Codex','codex'], ['Docker','docker'],
-    ['Ollama','ollama'], ['Git','git'], ['Ngrok','ngrok'], ['Cursor','cursor']
+    ['JavaScript','javascript'], ['REST APIs','rest-api'], ['Webhooks','webhooks'], ['SQL','sql'], ['Google Cloud','google-cloud']
   ]},
   { label: 'GOOGLE WORKSPACE & COLLABORATION', tools: [
     ['Google Workspace','google-workspace'], ['Gmail','gmail'], ['Google Drive','google-drive'],
